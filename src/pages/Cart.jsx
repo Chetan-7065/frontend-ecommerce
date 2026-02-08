@@ -214,7 +214,7 @@ export default function Cart() {
         throw "Failed to add order";
       }
     } catch (error) {
-      console.log("Error:- ", error.message);
+      throw error
     }
 
     setMessage("Order placed successfully");
