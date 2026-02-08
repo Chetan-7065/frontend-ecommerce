@@ -12,7 +12,7 @@ import UserDetails from './pages/UserDetails'
 import AddressDetails from './pages/AddressDetails';
 import { EcommerceProvider } from './context/EcommerceContext';
 import "react-toastify/dist/ReactToastify.css"
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer} from 'react-toastify';
 
 const router = createBrowserRouter([
   {

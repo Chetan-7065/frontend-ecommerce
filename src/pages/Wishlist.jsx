@@ -139,7 +139,7 @@ export default function Wishlist() {
         {/* {wishList.length === 0 && !loading && (
           <p className="fs-2">No item in wishlist</p>
         )} */}
-        {wishList.length === 0 && !loading && (
+        {wishList.length === 0 && !loading && !error &&(
   <div className="col-12 text-center py-5 my-5">
     <div className="mb-4">
       {/* A large, soft-colored icon looks professional */}

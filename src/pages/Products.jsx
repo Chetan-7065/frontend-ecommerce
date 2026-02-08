@@ -4,7 +4,6 @@ import useFetch from "../useFetch";
 import { useEffect, useState } from "react";
 import useEcommerceContext from "../context/EcommerceContext";
 import StarCounter from "../components/StarCounter";
-import { toast } from "react-toastify";
 
 function ProductsCard({ displayProduct, loading, error }) {
   const {
@@ -171,16 +170,13 @@ export default function Products() {
   }, [data]);
 
   const searchQuery = useParams();
-  console.log(searchQuery);
 
   useEffect(() => {
     if (!product || product.length === 0 || !searchQuery?.searchQuery ) return
     const existingProduct = product.filter((p) =>
       p.title.toLowerCase().includes(searchQuery.searchQuery.toLowerCase()),
   );
-  console.log(existingProduct);
   if (existingProduct.length > 0) {
-    console.log("here");
     setDisplayProduct(existingProduct);
     setIsInsearchQuery(false);
     } else if (
@@ -192,8 +188,6 @@ export default function Products() {
       }));
     }
   }, [searchQuery, product]);
-
-  console.log(displayProduct)
 
   const [formData, setFormData] = useState(() => {
     const initialCategory = searchQuery?.searchQuery
@@ -227,8 +221,6 @@ export default function Products() {
   }
 
   useEffect(() => {
-    console.log(isInsearchQuery);
-    console.log(formData.category);
     if (product.length === 0 && isInsearchQuery) return;
 
     let result = [...product];
@@ -265,9 +257,6 @@ export default function Products() {
 
     setDisplayProduct(result);
   }, [formData, product]);
-
-
-  console.log(displayProduct)
 
   function resetFilters() {
     setFormData({

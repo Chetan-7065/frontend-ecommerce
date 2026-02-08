@@ -1,8 +1,8 @@
-import { use, useState } from "react";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Link , useNavigate } from "react-router-dom";
 import useEcommerceContext from "../context/EcommerceContext";
-import UserDetails, { userDetails } from "../pages/UserDetails";
+import { userDetails } from "../pages/UserDetails";
 export default function Header(){
   const [message , setMessage] = useState("")
   const {wishList, cartList} = useEcommerceContext()

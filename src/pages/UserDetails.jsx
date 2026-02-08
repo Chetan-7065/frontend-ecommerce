@@ -57,8 +57,6 @@ useEffect(() => {
 
   
 }, [addresses, setPrimaryAddress, primaryAddress]);
-
-console.log(primaryAddress)
    const [address, setAddress] = useState({
         addressId: 0,
         houseNo: "",
@@ -95,8 +93,6 @@ console.log(primaryAddress)
      setAddresses(filteredAddresses)
     
   }
-
-  console.log(addresses)
 
 
  const handleInputChange = (e) => {

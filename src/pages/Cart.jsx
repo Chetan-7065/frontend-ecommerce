@@ -8,7 +8,6 @@ import StarCounter from "../components/StarCounter";
 export default function Cart() {
   const {
     cartList,
-    updateCartList,
     increaseQuantity,
     decreaseQuantity,
     toggleWishlist,
@@ -20,8 +19,6 @@ export default function Cart() {
   const { data, loading, error } = useFetch(
     "https://backend-ecommerce-opal-xi.vercel.app/products",
   );
-  console.log(displayProduct);
-  console.log(primaryAddress);
 
   useEffect(() => {
     if (data && data.data.products.length > 0 && cartList.length > 0) {
@@ -199,7 +196,6 @@ export default function Cart() {
     return acc;
   }, {});
 
-  console.log(ordersList);
 
   async function handleCheckoutBtn() {
     try {
@@ -217,10 +213,6 @@ export default function Cart() {
       if (!response.ok) {
         throw "Failed to add order";
       }
-
-      const data = await response.json();
-
-      console.log("Added order: ", data);
     } catch (error) {
       console.log("Error:- ", error.message);
     }

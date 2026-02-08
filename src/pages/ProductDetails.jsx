@@ -9,12 +9,10 @@ export default function ProductDetails() {
   const { updateCartList, cartList, increaseQuantity, decreaseQuantity } =
     useEcommerceContext();
   const productId = useParams();
-  console.log(productId.productId);
   const apiUrl = "https://backend-ecommerce-opal-xi.vercel.app/products";
   const { data, loading, error } = useFetch(apiUrl);
   const [product, setProduct] = useState([]);
   const [productImage, setProductImage] = useState("");
-  console.log(product);
   useEffect(() => {
     if (data && data.data.products.length > 0) {
       const products = data.data.products.find(
@@ -37,11 +35,12 @@ export default function ProductDetails() {
   }
   const quantityDetails = productQuantity(productId.productId);
 
-  console.log(product.images);
   return (
     <>
       <Header />
       <main>
+         {loading &&<p className="fs-3 text-dark my-4"> loading...</p>}
+        {error &&<p className="fs-3 text-dark my-4"> Error while fetching the data</p>}
         {Object.keys(product).length > 0 && (
           <div className="container mt-4">
             <div className="row">

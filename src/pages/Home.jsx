@@ -47,17 +47,6 @@ function CategoriesList(){
     if(data){
       categoriesList = data.data.categories.map((category, index) => {
         return(
-            // <div key={category._id} className="col-sm-2 my-3 d-flex flex-column ">
-            //   <Link to={`/products/${category.title}`} className="text-decoration-none">
-            //   <div className="card  border-primary h-100" style={{"maxWidth": "40rem"}}>
-            //     <i style={{"color": "#1a365d"}} className={`${arrayOfIcons[index]} display-3 text-center mt-2`}></i>
-            //      <div className="card-body d-flex flex-column">
-            //       <p className="card-text text-center text-primary mt-auto">{category.title}</p>
-            //      </div>
-            //    </div>
-            //   </Link>
-            // </div>
-
       <div key={category._id} className="col-sm-3 col-md-2 my-3">
   <Link to={`/products/${category.title}`} className="text-decoration-none">
     <div className="card h-100 border-1 border-white py-3 shadow-sm" 
@@ -82,6 +71,7 @@ function CategoriesList(){
    return(
     <div className="row">
         {loading &&<p className="fs-3 text-dark my-4"> loading...</p>}
+        {error &&<p className="fs-3 text-dark my-4"> Error while fetching the data</p>}
         {data && data.data.categories.length > 0 && categoriesList}
         </div>
    )

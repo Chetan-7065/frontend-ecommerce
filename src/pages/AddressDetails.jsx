@@ -5,7 +5,6 @@ import { userDetails } from "./UserDetails";
 import { useNavigate } from "react-router-dom";
 
 export default function AddressDetails(){
- const {primaryAddress, setPrimaryAddress} = useEcommerceContext()
  const [messageDisplay, setMessageDisplay] = useState(false)
  const navigate = useNavigate()
 
@@ -26,8 +25,6 @@ export default function AddressDetails(){
         isPrimary: false,
  })
 
- console.log(address)
- console.log(userDetails.addresses)
 
  const addNewAddress = (address) => {
    if(userDetails.addresses.addressId !== address.addressId && address.addressId !== 0){
@@ -54,10 +51,8 @@ const handleFormSubmit = (e) => {
     ...address,
     addressId: address.addressId || newId
   }
-  
   addNewAddress(finalAddress)
    setMessageDisplay(true)
- 
  
 }
 
@@ -69,7 +64,7 @@ useEffect(() => {
     }, 3000)
     return () => clearTimeout(timer);
   }
-}, [messageDisplay]);
+}, [messageDisplay, navigate]);
 
 return(
   <>
