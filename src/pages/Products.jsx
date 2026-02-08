@@ -187,7 +187,7 @@ export default function Products() {
         category: [...preValue.category, searchQuery.searchQuery],
       }));
     }
-  }, [searchQuery, product, formData.category]);
+  }, [searchQuery, product]);
 
   const [formData, setFormData] = useState(() => {
     const initialCategory = searchQuery?.searchQuery
