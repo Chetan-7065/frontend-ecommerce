@@ -211,10 +211,10 @@ export default function Cart() {
       );
 
       if (!response.ok) {
-        throw "Failed to add order";
+        throw new error( "Failed to add order")
       }
     } catch (error) {
-      throw error
+      throw new Error("Something went wrong")
     }
 
     setMessage("Order placed successfully");
