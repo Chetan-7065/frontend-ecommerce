@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Header from "../components/Header"
-import useEcommerceContext from "../context/EcommerceContext"
 import { userDetails } from "./UserDetails";
 import { useNavigate } from "react-router-dom";
 

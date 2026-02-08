@@ -16,6 +16,7 @@ function Product(){
     return(
       <>
       {loading && <p className="fs-3 text-dark">loading...</p> }
+      {error && <p className="fs-3 text-dark">Error while fetching the data</p> }
      {productOfTheDay && productOfTheDay.length > 0 &&
         productOfTheDay.map((product) => {
           return (

@@ -16,12 +16,12 @@ export default function ProductDetails() {
   useEffect(() => {
     if (data && data.data.products.length > 0) {
       const products = data.data.products.find(
-        (product) => product._id == productId.productId,
+        (product) => product._id === productId.productId,
       );
       setProduct(products);
       setProductImage(products.images[0]);
     }
-  }, [data]);
+  }, [data, productId.productId]);
 
   function productQuantity(productId) {
     const existingProduct = cartList.find(
@@ -203,15 +203,14 @@ export default function ProductDetails() {
                           </span>
                         </div>
                       ) : (
-                        <a
-                          to="#"
+                        <button
                           className="btn btn-warning rounded-pill py-2 fw-bold mt-auto"
                           onClick={() =>
                             updateCartList(product._id, product.title)
                           }
                         >
                           <span>Add to cart</span>
-                        </a>
+                        </button>
                       )}
                       {/* <button className="btn btn-warning rounded-pill py-2 fw-bold">Add to Cart</button> */}
                       <button

@@ -187,7 +187,7 @@ export default function Products() {
         category: [...preValue.category, searchQuery.searchQuery],
       }));
     }
-  }, [searchQuery, product]);
+  }, [searchQuery, product, formData.category]);
 
   const [formData, setFormData] = useState(() => {
     const initialCategory = searchQuery?.searchQuery
@@ -256,7 +256,7 @@ export default function Products() {
     }
 
     setDisplayProduct(result);
-  }, [formData, product]);
+  }, [formData, product, isInsearchQuery]);
 
   function resetFilters() {
     setFormData({

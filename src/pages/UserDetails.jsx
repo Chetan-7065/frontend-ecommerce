@@ -82,7 +82,7 @@ useEffect(() => {
   }
 
   const handleEditChanges = (addressId) => {
-    const changeAddress = addresses.find((address) => address.addressId == addressId)
+    const changeAddress = addresses.find((address) => address.addressId === addressId)
     if(changeAddress){
       setAddress(changeAddress)
     }

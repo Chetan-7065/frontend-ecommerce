@@ -8,7 +8,6 @@ import StarCounter from "../components/StarCounter";
 export default function Wishlist() {
   const {
     wishList,
-    removeFromWishlist,
     updateCartList,
     toggleWishlist,
     isInWishlist,
@@ -136,9 +135,6 @@ export default function Wishlist() {
           {loading && <p className="display-5 my-3">Loading...</p>}
           {productCards}
         </div>
-        {/* {wishList.length === 0 && !loading && (
-          <p className="fs-2">No item in wishlist</p>
-        )} */}
         {wishList.length === 0 && !loading && !error &&(
   <div className="col-12 text-center py-5 my-5">
     <div className="mb-4">
