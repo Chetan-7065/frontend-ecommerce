@@ -4,6 +4,7 @@ import useFetch from "../useFetch";
 import { useEffect, useState } from "react";
 import useEcommerceContext from "../context/EcommerceContext";
 import StarCounter from "../components/StarCounter";
+import { useToastLoader } from "../components/useToastLoader";
 
 function ProductsCard({ displayProduct, loading, error }) {
   const {
@@ -14,7 +15,7 @@ function ProductsCard({ displayProduct, loading, error }) {
     increaseQuantity,
     decreaseQuantity,
   } = useEcommerceContext();
-
+   
   function productQuantity(productId) {
     const existingProduct = cartList.find(
       (product) => product.id === productId,
@@ -145,13 +146,12 @@ function ProductsCard({ displayProduct, loading, error }) {
       : [];
   return (
     <>
-      {loading && <p className="display-5 my-3">loading...</p>}
-      {productCards.length === 0 && !loading ? (
+      {productCards.length === 0 && !loading && !error  ? (
         <p className="text-center display-5 my-3">No data found</p>
       ) : (
         productCards
       )}
-      {error && alert(`${error}`)}
+      {error &&  <p className="display-5 my-3">Error while fetching the products</p>}
     </>
   );
 }
@@ -161,37 +161,24 @@ export default function Products() {
   const { data, loading, error } = useFetch(apiUrl);
   const [product, setProduct] = useState([]);
   const [displayProduct, setDisplayProduct] = useState([]);
-  const [isInsearchQuery, setIsInsearchQuery] = useState(false);
+  const [isInsearchQuery, setIsInsearchQuery] = useState(true);
+   const { hasFetched } = useToastLoader(loading, error, data, {
+    loading: "loading products...",
+    error: "Failed to load products"
+  } )
 
   useEffect(() => {
-    if (data && data.data.products.length > 0) {
+    if (data && data.data.products.length > 0){
       setProduct(data.data.products);
     }
   }, [data]);
 
   const searchQuery = useParams();
-
-  useEffect(() => {
-    if (!product || product.length === 0 || !searchQuery?.searchQuery ) return
-    const existingProduct = product.filter((p) =>
-      p.title.toLowerCase().includes(searchQuery.searchQuery.toLowerCase()),
-  );
-  if (existingProduct.length > 0) {
-    setDisplayProduct(existingProduct);
-    setIsInsearchQuery(false);
-    } else if (
-      !formData.category.includes(searchQuery.searchQuery.toLowerCase())
-    ){
-      setFormData((preValue) => ({
-        ...preValue,
-        category: [...preValue.category, searchQuery.searchQuery],
-      }));
-    }
-  }, [searchQuery, product]);
+  const query = searchQuery?.searchQuery.toLowerCase()
 
   const [formData, setFormData] = useState(() => {
-    const initialCategory = searchQuery?.searchQuery
-      ? [searchQuery.searchQuery.toLowerCase()]
+    const initialCategory = query
+      ? [query]
       : [];
     return {
       category: initialCategory,
@@ -221,11 +208,26 @@ export default function Products() {
   }
 
   useEffect(() => {
-    if (product.length === 0 && isInsearchQuery) return;
+    if (product.length === 0 ) return;
 
     let result = [...product];
 
-    if (formData.category.length > 0) {
+    console.log(formData.category)
+
+    const isItCategory = result.some((product) => product.category.title.toLowerCase().includes(query))
+    console.log(isItCategory)
+
+    if(!isItCategory){
+      console.log("here")
+      const existingProduct = product.filter((p) =>
+      p.title.toLowerCase().includes(query)
+     )
+     console.log(existingProduct)
+     result = existingProduct.length > 0 ? [...existingProduct] : result
+    }
+
+
+    if (formData.category.length > 0 && isItCategory) {
       const filteredData = [];
       for (let i = 0; i < formData.category.length; i++) {
         const filterByCategory = result.filter((product) =>
@@ -240,7 +242,7 @@ export default function Products() {
 
     if (formData.rating > 0) {
       result = result.filter((product) => product.rating >= formData.rating);
-      //  && product.rating < formData.rating + 1 )
+      //  && product.rating < formData.rating + 1 ) for range between ratings :- 4 to 5
     }
 
     if (formData.price) {
@@ -256,7 +258,7 @@ export default function Products() {
     }
 
     setDisplayProduct(result);
-  }, [formData, product, isInsearchQuery]);
+  }, [formData, product, query]);
 
   function resetFilters() {
     setFormData({

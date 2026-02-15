@@ -2,10 +2,15 @@ import useFetch from "../useFetch"
 import heroImage from "../images/heroImage.png"
 import iphone from "../images/iphone.png"
 import { Link } from "react-router-dom";
+import { useToastLoader } from "../components/useToastLoader";
 
 function Product(){
      const productsUrl =  "https://backend-ecommerce-opal-xi.vercel.app/products"
      const {data, loading , error} = useFetch(productsUrl)
+        const { hasFetched } = useToastLoader(loading, error, data, {
+    loading: "loading products...",
+    error: "Failed to load products"
+  } )
      let productOfTheDay = []
      if(data){
        const categoryProduct = data.data.products.filter((product)=> product.category.title === "Smartphones")
@@ -15,7 +20,7 @@ function Product(){
     }
     return(
       <>
-      {loading && <p className="fs-3 text-dark">loading...</p> }
+      {!loading && hasFetched}
       {error && <p className="fs-3 text-dark">Error while fetching the data</p> }
      {productOfTheDay && productOfTheDay.length > 0 &&
         productOfTheDay.map((product) => {
@@ -71,7 +76,7 @@ function CategoriesList(){
     }
    return(
     <div className="row">
-        {loading &&<p className="fs-3 text-dark my-4"> loading...</p>}
+        {/* {loading &&<p className="fs-3 text-dark my-4"> loading...</p>} */}
         {error &&<p className="fs-3 text-dark my-4"> Error while fetching the data</p>}
         {data && data.data.categories.length > 0 && categoriesList}
         </div>

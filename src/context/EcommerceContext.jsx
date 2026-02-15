@@ -8,9 +8,15 @@ const useEcommerceContext = () => useContext(EcommerceContext)
 export default useEcommerceContext
 
 export function EcommerceProvider({ children }){
-    const [wishList, setWishlist] = useState([])
-     const [cartList, setCartList] = useState([]) 
+    const [wishList, setWishlist] = useState(JSON.parse(localStorage.getItem("wishList")) || [])
+     const [cartList, setCartList] = useState(JSON.parse(localStorage.getItem("cartList")) || []) 
      const [primaryAddress, setPrimaryAddress] = useState(userDetails.addresses.find((address) => address.isPrimary))
+
+     function updateLocalStorage(data, name){
+      const jsonData = JSON.stringify(data)
+      localStorage.setItem(`${name}`, jsonData)
+     }
+
     function updateCartList(productId, productTitle) {
       let product = []
       const existingProduct = cartList.find(product => product.id === productId)
@@ -21,11 +27,11 @@ export function EcommerceProvider({ children }){
             : product
         )
       } else {
-        console.log("Added to the cart - toast error")
         toast.success(`${productTitle} added to the cart`)
         product = [...cartList, { id: productId, title: productTitle, quantity: 1 }]
       }
-      setCartList(product)
+      updateLocalStorage(product, "cartList")
+      setCartList(JSON.parse(localStorage.getItem("cartList")))
     }  
 
     function increaseQuantity(productId){
@@ -36,7 +42,8 @@ export function EcommerceProvider({ children }){
           toast.success(`${product.title} quantity increased`)
       }
       const updateProduct = cartList.map((product) =>  product.id === productId && product.quantity < 10 ? {...product, quantity: product.quantity + 1} : product)
-      setCartList(updateProduct)
+      updateLocalStorage(updateProduct, "cartList")
+      setCartList(JSON.parse(localStorage.getItem("cartList")))
     }
     function decreaseQuantity(productId){
       const product = cartList.find((p) => p.id === productId)
@@ -47,30 +54,33 @@ export function EcommerceProvider({ children }){
           }
       const updateProduct = cartList.map((product) =>  product.id === productId && product.quantity > 0 ?  {...product, quantity: product.quantity - 1}: product)
       const filteredProduct = updateProduct.filter((product) => product.quantity !== 0)
-
-      setCartList(filteredProduct)
+      updateLocalStorage(filteredProduct, "cartList")
+      setCartList(JSON.parse(localStorage.getItem("cartList")))
     }
 
    function toggleWishlist(productId){
     if(wishList.includes(productId)){
        toast.error("Remove from wishlist")
-      const filterWishlist = wishList.filter((product) => product !== productId)
-      setWishlist(filterWishlist)
+       const filterWishlist = wishList.filter((product) => product !== productId)
+      updateLocalStorage(filterWishlist, "wishList")
+      setWishlist(JSON.parse(localStorage.getItem("wishList")) )
     }else{
       toast.success("Added to wishlist")
-      setWishlist((preValue) => [...preValue, productId])
+      const updateProducts = [...wishList, productId]
+      updateLocalStorage(updateProducts, "wishList")
+      setWishlist(JSON.parse(localStorage.getItem("wishList")) )
     }
   }
 
   function isInWishlist(productId){
-   
     return wishList.includes(productId)
   }
 
   function removeFromWishlist(productId){
     
       const filterWishlist = wishList.filter((product) => product !== productId)
-      setWishlist(filterWishlist)
+      updateLocalStorage(filterWishlist, "wishList")
+      setWishlist(JSON.parse(localStorage.getItem("wishList")) )
   }
 
   return(

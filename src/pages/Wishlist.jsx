@@ -4,6 +4,7 @@ import useEcommerceContext from "../context/EcommerceContext";
 import useFetch from "../useFetch";
 import { Link } from "react-router-dom";
 import StarCounter from "../components/StarCounter";
+import { useToastLoader } from "../components/useToastLoader";
 
 export default function Wishlist() {
   const {
@@ -19,7 +20,11 @@ export default function Wishlist() {
     "https://backend-ecommerce-opal-xi.vercel.app/products",
   );
   const [product, setProduct] = useState([]);
-
+   const { hasFetched } = useToastLoader(loading, error, data, {
+    loading: "loading your wishlist...",
+    error: "Failed to load wishlist"
+  } )
+  console.log(wishList)
   useEffect(() => {
     if (data && data.data.products.length > 0) {
       const wishlistData = data.data.products.filter((product) =>
@@ -103,7 +108,6 @@ export default function Wishlist() {
         </div>
       </Link>
 
-      {/* Action Buttons */}
       <div className="mt-auto">
         {quantityDetails.quantity > 0 ? (
           <div className="d-flex align-items-center justify-content-between bg-primary rounded shadow-sm px-1">
@@ -132,10 +136,9 @@ export default function Wishlist() {
       <main className="container">
         <h1 className="text-center mt-4"> My Wishlist</h1>
         <div className="row">
-          {loading && <p className="display-5 my-3">Loading...</p>}
           {productCards}
         </div>
-        {wishList.length === 0 && !loading && !error &&(
+        {wishList.length === 0 && !loading && !error && hasFetched &&(
   <div className="col-12 text-center py-5 my-5">
     <div className="mb-4">
       {/* A large, soft-colored icon looks professional */}

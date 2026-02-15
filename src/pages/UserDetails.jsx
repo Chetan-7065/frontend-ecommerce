@@ -168,20 +168,19 @@ useEffect(() => {
   <div className="row justify-content-center">
     <div className="col-lg-10">
       <div className="row g-5">
-        {/* Left Side: Photo & Quick Status */}
         <div className="col-md-4 text-center">
           <img 
-            className="rounded-4 shadow-sm mb-3 border p-1 bg-white" 
+            className="rounded-4 shadow-sm mb-3 border p-2 bg-white" 
             src={`${userDetails.imageUrl}?crop=faces&fit=crop&h=200&w=200/200x200`} 
             style={{ width: '180px', height: '180px', objectFit: 'cover' }}
             alt="Profile" 
+              onMouseOver={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
+              onMouseOut={(e) => e.currentTarget.style.transform = 'scale(0.90)'}
           />
           <h4 className="fw-bold">{userDetails.name}</h4>
           <p className="text-muted small">Verified Account</p>
-          <button className="btn btn-dark w-100 rounded-pill shadow-sm">Edit Photo</button>
         </div>
 
-        {/* Right Side: Data Grid */}
         <div className="col-md-8">
           <h5 className="mb-4 fw-bold">Account Settings</h5>
           <div className="row g-4">

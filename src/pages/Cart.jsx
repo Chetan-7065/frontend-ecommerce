@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Header from "../components/Header";
 import useEcommerceContext from "../context/EcommerceContext";
 import useFetch from "../useFetch";
 import { Link } from "react-router-dom";
 import StarCounter from "../components/StarCounter";
+import { useToastLoader } from "../components/useToastLoader";
 
 export default function Cart() {
   const {
@@ -18,13 +19,17 @@ export default function Cart() {
   const [message, setMessage] = useState("");
   const { data, loading, error } = useFetch(
     "https://backend-ecommerce-opal-xi.vercel.app/products",
-  );
-
+  )
+    const { hasFetched } = useToastLoader(loading, error, data, {
+    loading: "Fetching your cart...",
+    error: "Failed to load cart"
+  } )
+  
   useEffect(() => {
     if (data && data.data.products.length > 0 && cartList.length > 0) {
       const products = cartList.map((item) => {
         const existingProduct = data.data.products.find(
-          (p) => p._id === item.id,
+          (product) => product._id === item.id,
         );
         if (existingProduct) {
           return {
@@ -34,24 +39,26 @@ export default function Cart() {
         } else {
           return { ...item };
         }
+        
       });
       setDisplayProduct(products);
     } else {
       setDisplayProduct([]);
     }
-  }, [data, cartList]);
+
+    
+  }, [data, cartList, loading, error]);
 
   const productCards =
     displayProduct.length > 0
       ? displayProduct.map((product) => {
-          const storeInWishlist = isInWishlist(product._id);
+          const storeInWishlist = isInWishlist(product._id)
           return (
             <div key={product._id} className="col-sm-6 col-md-6 col-lg-3 mb-4">
               <div
                 className="card h-100 shadow-sm border-0 position-relative transition-hover"
                 style={{ borderRadius: "12px", overflow: "hidden" }}
               >
-                {/* Product Image Section */}
                 <Link
                   to={`/productsDetails/${product._id}`}
                   className="text-decoration-none"
@@ -84,8 +91,6 @@ export default function Cart() {
                     />
                   </div>
                 </Link>
-
-                {/* Wishlist Icon - Placed AFTER the image link with high z-index to stay on top */}
                 <div
                   className="position-absolute"
                   style={{ top: "10px", right: "10px", zIndex: "10" }}
@@ -97,10 +102,10 @@ export default function Cart() {
                       height: "35px",
                       border: "none",
                       backgroundColor: "white",
-                      transition: "none", // Ensures icon doesn't move when card/image effects trigger
+                      transition: "none", 
                     }}
                     onClick={(e) => {
-                      e.preventDefault(); // Prevents link trigger if nested
+                      e.preventDefault(); 
                       toggleWishlist(product._id);
                     }}
                   >
@@ -196,7 +201,6 @@ export default function Cart() {
     return acc;
   }, {});
 
-
   async function handleCheckoutBtn() {
     try {
       const response = await fetch(
@@ -211,10 +215,10 @@ export default function Cart() {
       );
 
       if (!response.ok) {
-        throw new error( "Failed to add order")
+        throw new error("Failed to add order");
       }
     } catch (error) {
-      throw new Error("Something went wrong")
+      throw new Error("Something went wrong");
     }
 
     setMessage("Order placed successfully");
@@ -222,150 +226,29 @@ export default function Cart() {
 
   return (
     <>
-      {/* <Header /> */}
-      {/* <main className="container">
-        <h1 className="text-center mt-4"> My Cart</h1>
-        <div className="row">
-          <div className="col-md-9 ">
-            <div className="row">
-              {loading && <p className="display-5 my-3">Loading...</p>}
-              {productCards}
-            </div>
-          </div>
-          <div className="col ">
-            {displayProduct.length > 0 && (
-              <div
-                className="card position-sticky top-20  shadow-sm border-0"
-                style={{ width: "100%", maxWidth: "400px" }}
-              >
-                <div className="card-body p-4">
-                  <h5 className="card-title fw-bold mb-4">Order Summary</h5>
-
-                  <table className="table table-borderless mb-0">
-                    <tbody>
-                      <tr>
-                        <th className="ps-0 text-muted fw-normal">
-                          Total Price
-                        </th>
-                        <td className="text-end fw-bold">
-                          ₹{cartDetails.totalOriginalPrice}
-                        </td>
-                      </tr>
-                      <tr>
-                        <th className="ps-0 text-muted fw-normal">Discount</th>
-                        <td className="text-end">
-                          <span className="text-danger">
-                            -{cartDetails.totalDiscount}%
-                          </span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th className="ps-0 text-muted fw-normal">Delivery</th>
-                        <td className="text-end text-success">
-                          {cartDetails.totalItems > 0
-                            ? `₹${cartDetails.totalItems * 100}`
-                            : "Free"}
-                        </td>
-                      </tr>
-                      <tr className="border-top">
-                        <th className="ps-0 pt-3 fw-bold fs-5">Total Amount</th>
-                        <td className="text-end pt-3 fw-bold fs-5 text-primary">
-                          ₹
-                          {(
-                            cartDetails.totalPrice +
-                            cartDetails.totalItems * 100
-                          ).toFixed(2)}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-
-                  <hr className="my-4" />
-
-                  {/* Shipping Address Section */}
-      {/* <div className="mb-4">
-                    <label className="form-label text-muted small text-uppercase fw-bold">
-                      Shipping Address
-                    </label>
-                    <div className="d-flex align-items-start border rounded p-2 bg-light">
-                      <i className="bi bi-geo-alt mt-1 me-2 text-secondary"></i>
-                      <div className="col">
-                        <div className="small mb-0 text-secondary">
-                          <span>{primaryAddress.addressType}</span>
-                          <p>
-                            {primaryAddress.houseNo}{" "}
-                            {primaryAddress.buildingName},{" "}
-                            {primaryAddress.street}, {primaryAddress.landmark},{" "}
-                            {primaryAddress.area}, {primaryAddress.city},{" "}
-                            {primaryAddress.state} - {primaryAddress.postalCode}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <Link
-                      className="btn btn-link btn-sm p-0 mt-1 text-decoration-none"
-                      to="/user"
-                    >
-                      Change Address
-                    </Link>
-                  </div>
-
-                  {/* Checkout Button */}
-      {/* <button className="btn btn-primary w-100 py-2 fw-bold shadow-sm rounded-3" onClick={handleCheckoutBtn}>
-                    Proceed to Checkout
-                  </button>
-
-                  <p className="text-center text-muted small mt-3">
-                    <i className="bi bi-shield-check"></i> Secure Checkout
-                    Guaranteed
-                  </p>
-                </div>
-              </div>
-            )}
-            <div className="text-success fs-6">{message}</div>
-          </div>
-          {error && <p className="display-5 my-3">error</p>}
-          {cartList.length === 0 && !loading && (
-            <p className="fs-2">No item in cart</p>
-          )}
-        </div>
-      </main> */}
       <Header />
       <main className="container-fluid px-md-5">
-        {" "}
-        {/* container-fluid makes it wider */}
         <h1 className="text-center mt-4 fw-bold">My Cart</h1>
         <div className="row mt-4 g-4">
-          {/* Product List Area: Adjusted to 9 columns on large screens */}
           <div className="col-lg-9">
             <div className="row g-3">
-              {loading && (
-                <p className="display-5 my-3 text-center w-100">Loading...</p>
-              )}
-
-              {/* Ensure that inside your productCards mapping, 
-            the outer div has className="col-md-6 col-lg-3" 
-            to fix 4 products per row */}
-              {productCards}
-
-              {cartList.length === 0 && !loading && (
+              {!loading && cartList.length === 0 && hasFetched &&(
                 <div className="text-center p-5 mx-5 ">
                   <i className="bi bi-cart-x display-1 text-muted"></i>
                   <p className="fs-2 mt-3 ">No items in your cart</p>
                 </div>
               )}
+              {productCards}
             </div>
           </div>
-
-          {/* Sidebar Summary: Adjusted to 3 columns and fixed positioning */}
           <div className="col-lg-3">
             {displayProduct.length > 0 && (
               <div
                 className="card position-sticky shadow-sm border-0"
                 style={{
-                  top: "2rem", // This fixes it at the top while scrolling
+                  top: "2rem",
                   borderRadius: "15px",
-                  zIndex: 10, // Keeps it above other elements
+                  zIndex: 10,
                 }}
               >
                 <div className="card-body p-4">
@@ -451,8 +334,6 @@ export default function Cart() {
                 </div>
               </div>
             )}
-
-            {/* Toast/Message placement */}
             <div className="text-success text-center mt-2 fw-bold">
               {message}
             </div>

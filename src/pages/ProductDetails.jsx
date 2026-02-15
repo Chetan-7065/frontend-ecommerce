@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import useFetch from "../useFetch";
 import StarCounter from "../components/StarCounter";
 import useEcommerceContext from "../context/EcommerceContext";
+import { useToastLoader } from "../components/useToastLoader";
 
 export default function ProductDetails() {
   const { updateCartList, cartList, increaseQuantity, decreaseQuantity } =
@@ -13,6 +14,10 @@ export default function ProductDetails() {
   const { data, loading, error } = useFetch(apiUrl);
   const [product, setProduct] = useState([]);
   const [productImage, setProductImage] = useState("");
+   const { hasFetched } = useToastLoader(loading, error, data, {
+      loading: "loading products details...",
+      error: "Failed to load products details"
+    } )
   useEffect(() => {
     if (data && data.data.products.length > 0) {
       const products = data.data.products.find(
@@ -39,7 +44,7 @@ export default function ProductDetails() {
     <>
       <Header />
       <main>
-         {loading &&<p className="fs-3 text-dark my-4"> loading...</p>}
+         
         {error &&<p className="fs-3 text-dark my-4"> Error while fetching the data</p>}
         {Object.keys(product).length > 0 && (
           <div className="container mt-4">
@@ -51,6 +56,8 @@ export default function ProductDetails() {
                       src={productImage}
                       className="img-fluid"
                       alt={product.title}
+                       onMouseOver={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
+                        onMouseOut={(e) => e.currentTarget.style.transform = 'scale(0.90)'}
                     />
                   </div>
                   <div className="d-flex gap-2">
@@ -67,6 +74,8 @@ export default function ProductDetails() {
                             cursor: "pointer",
                           }}
                           alt="thumbnail"
+                            onMouseOver={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
+                            onMouseOut={(e) => e.currentTarget.style.transform = 'scale(0.90)'}
                         />
                       ))}
                   </div>
