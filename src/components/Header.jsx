@@ -55,3 +55,9 @@ export default function Header(){
 </header>
   )
 }
+
+// Tasks to complete 
+// Add more product on the database
+// Working buy now button
+// Address details working on address to update address on the localStorage
+// 2,7,9

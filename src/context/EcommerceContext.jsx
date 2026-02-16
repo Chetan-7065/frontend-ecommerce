@@ -84,7 +84,7 @@ export function EcommerceProvider({ children }){
   }
 
   return(
-    <EcommerceContext.Provider value={{wishList, toggleWishlist, isInWishlist, removeFromWishlist, cartList, updateCartList,increaseQuantity,decreaseQuantity, primaryAddress, setPrimaryAddress}}>
+    <EcommerceContext.Provider value={{wishList, toggleWishlist, isInWishlist, removeFromWishlist, cartList, updateCartList,increaseQuantity,decreaseQuantity, primaryAddress, setPrimaryAddress, updateLocalStorage}}>
       {children}
     </EcommerceContext.Provider>
   )

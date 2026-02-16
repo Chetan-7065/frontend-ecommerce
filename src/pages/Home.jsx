@@ -48,6 +48,10 @@ function Product(){
 function CategoriesList(){
   const url = "https://backend-ecommerce-opal-xi.vercel.app/categories"
     const {data, loading , error} = useFetch(url)
+     const { hasFetched } = useToastLoader(loading, error, data, {
+    loading: "loading categories...",
+    error: "Failed to load categories"
+  } )
      const arrayOfIcons = ["bi bi-laptop", "bi bi-headphones","bi bi-controller", "bi bi-smartwatch", "bi bi-house-door", "bi bi-phone" ]
      let categoriesList = []
     if(data){

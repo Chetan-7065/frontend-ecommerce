@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import Header from "../components/Header"
 import { userDetails } from "./UserDetails";
 import { useNavigate } from "react-router-dom";
+import useEcommerceContext from "../context/EcommerceContext";
 
 export default function AddressDetails(){
  const [messageDisplay, setMessageDisplay] = useState(false)
+ const {updateLocalStorage} = useEcommerceContext()
  const navigate = useNavigate()
 
  const [address, setAddress] = useState({
@@ -24,11 +26,15 @@ export default function AddressDetails(){
         isPrimary: false,
  })
 
-
+ 
  const addNewAddress = (address) => {
-   if(userDetails.addresses.addressId !== address.addressId && address.addressId !== 0){
-    userDetails.addresses.push(address)
-   }
+   const addresses = JSON.parse(localStorage.getItem("addresses"))
+   if(addresses.addressId !== address.addressId && address.addressId !== 0){
+    addresses.push(address)
+  }
+  console.log(addresses)
+  updateLocalStorage(addresses, "addresses")
+  console.log(JSON.parse(localStorage.getItem("addresses")))
  }
 
 const handleInputChange = (e) => {
@@ -59,7 +65,7 @@ useEffect(() => {
   if (messageDisplay) {
     const timer = setTimeout(() => {
       setMessageDisplay(false);
-   navigate(`/user`)
+   navigate("/user")
     }, 3000)
     return () => clearTimeout(timer);
   }
@@ -156,7 +162,7 @@ return(
           </div>
 
           <div className="col-12 mt-4 pt-2 border-top d-flex justify-content-end">
-            <button type="button" className="btn btn-outline-danger me-2 px-4">
+            <button type="button" className="btn btn-outline-danger me-2 px-4" onClick={() => navigate("/user")}>
               Cancel
             </button>
             <button type="submit" className="btn btn-success px-4" >

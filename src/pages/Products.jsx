@@ -161,7 +161,6 @@ export default function Products() {
   const { data, loading, error } = useFetch(apiUrl);
   const [product, setProduct] = useState([]);
   const [displayProduct, setDisplayProduct] = useState([]);
-  const [isInsearchQuery, setIsInsearchQuery] = useState(true);
    const { hasFetched } = useToastLoader(loading, error, data, {
     loading: "loading products...",
     error: "Failed to load products"
@@ -306,7 +305,7 @@ export default function Products() {
                     "audio",
                     "gaming",
                     "wearables",
-                    "smartHome",
+                    "smarthome",
                     "smartphones",
                   ].map((cat) => (
                     <div className="form-check mb-2" key={cat}>

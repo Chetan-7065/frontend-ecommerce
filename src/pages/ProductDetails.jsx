@@ -1,10 +1,11 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import Header from "../components/Header";
 import { useEffect, useState } from "react";
 import useFetch from "../useFetch";
 import StarCounter from "../components/StarCounter";
 import useEcommerceContext from "../context/EcommerceContext";
 import { useToastLoader } from "../components/useToastLoader";
+
 
 export default function ProductDetails() {
   const { updateCartList, cartList, increaseQuantity, decreaseQuantity } =
@@ -18,6 +19,7 @@ export default function ProductDetails() {
       loading: "loading products details...",
       error: "Failed to load products details"
     } )
+    const navigate = useNavigate()
   useEffect(() => {
     if (data && data.data.products.length > 0) {
       const products = data.data.products.find(
@@ -39,6 +41,17 @@ export default function ProductDetails() {
     }
   }
   const quantityDetails = productQuantity(productId.productId);
+
+  function handleBuyNow(productId, productTitle){
+    const existingProduct = cartList.find(
+      (product) => product.id === productId,
+    );
+    if(existingProduct){
+      navigate("/cart")
+    }else{
+      updateCartList(productId, productTitle)
+    }
+  }
 
   return (
     <>
@@ -222,12 +235,14 @@ export default function ProductDetails() {
                         </button>
                       )}
                       {/* <button className="btn btn-warning rounded-pill py-2 fw-bold">Add to Cart</button> */}
-                      <button
+                      <Link
                         className="btn btn-orange rounded-pill py-2 fw-bold"
                         style={{ backgroundColor: "#ffa41c" }}
+                        onClick={() => handleBuyNow(product._id , product.title)}
+                        to={"/cart"}
                       >
                         Buy Now
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </div>

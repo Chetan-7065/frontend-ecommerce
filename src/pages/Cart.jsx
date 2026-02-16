@@ -49,6 +49,8 @@ export default function Cart() {
     
   }, [data, cartList, loading, error]);
 
+  console.log(displayProduct)
+
   const productCards =
     displayProduct.length > 0
       ? displayProduct.map((product) => {
@@ -115,8 +117,8 @@ export default function Cart() {
                   </button>
                 </div>
 
-                <div className="card-body d-flex flex-column p-3">
-                  <Link to={`/productsDetails/${product._id}`}>
+                <div className="card-body d-flex flex-column p-3 ">
+                  <Link to={`/productsDetails/${product._id}` } className="text-decoration-none">
                     <h6
                       className="card-title text-dark fw-bold mb-2"
                       style={{
@@ -130,7 +132,7 @@ export default function Cart() {
                       {product.title}
                     </h6>
 
-                    <div className="mb-3">
+                    <div className="mb-3 text-decoration-none">
                       <div style={{ color: "#0099ff" }}>
                         <span className="card-text fs-4 fw-bold">
                           ₹{product.price.toLocaleString()}
