@@ -147,7 +147,25 @@ function ProductsCard({ displayProduct, loading, error }) {
   return (
     <>
       {productCards.length === 0 && !loading && !error  ? (
-        <p className="text-center display-5 my-3">No data found</p>
+       <div className="text-center py-5 my-5  rounded">
+  {/* Icon: Using a simple Bootstrap Icon or a generic SVG */}
+  <div className="mb-4">
+    <i className="bi bi-cpu text-muted" style={{ fontSize: '4rem' }}></i>
+  </div>
+  
+  <h2 className="fw-bold text-dark">No Gadgets Found</h2>
+  <p className="text-muted mx-auto" style={{ maxWidth: '400px' }}>
+    We couldn't find any electronics matching your current filters. 
+    Try adjusting your search or checking another category.
+  </p>
+  
+  <button 
+    className="btn btn-primary btn-lg mt-3 px-4 shadow-sm"
+    onClick={() => window.location.reload()} // Or a function to reset filters
+  >
+    Clear All Filters
+  </button>
+</div>
       ) : (
         productCards
       )}
@@ -214,15 +232,13 @@ export default function Products() {
     console.log(formData.category)
 
     const isItCategory = result.some((product) => product.category.title.toLowerCase().includes(query))
-    console.log(isItCategory)
 
     if(!isItCategory){
       console.log("here")
       const existingProduct = product.filter((p) =>
       p.title.toLowerCase().includes(query)
-     )
-     console.log(existingProduct)
-     result = existingProduct.length > 0 ? [...existingProduct] : result
+     )  
+     result = existingProduct.length > 0 ? [...existingProduct] : []
     }
 
 
@@ -401,6 +417,10 @@ export default function Products() {
           </div>
           <div className="col-lg-9 col-xl-10">
             <div className="bg-white p-3 rounded-3 shadow-sm min-vh-100">
+                {/* <p>{`Total Products (${displayProduct.length})`}</p> */}
+                <p className="text-muted small fw-medium text-uppercase mb-3 tracking-wider">
+                  Found <span className="text-dark fw-bold">{displayProduct.length}</span> electronic items
+                </p>
               <div className="row g-3">
                 <ProductsCard
                   displayProduct={displayProduct}

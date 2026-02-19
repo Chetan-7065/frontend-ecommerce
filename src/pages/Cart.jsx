@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect} from "react";
 import Header from "../components/Header";
 import useEcommerceContext from "../context/EcommerceContext";
 import useFetch from "../useFetch";
-import { Link } from "react-router-dom";
+import { Link,  useNavigate } from "react-router-dom";
 import StarCounter from "../components/StarCounter";
 import { useToastLoader } from "../components/useToastLoader";
-
+import { toast } from "react-toastify";
 export default function Cart() {
   const {
     cartList,
@@ -13,10 +13,10 @@ export default function Cart() {
     decreaseQuantity,
     toggleWishlist,
     isInWishlist,
+    clearCartList,
     primaryAddress,
   } = useEcommerceContext();
   const [displayProduct, setDisplayProduct] = useState([]);
-  const [message, setMessage] = useState("");
   const { data, loading, error } = useFetch(
     "https://backend-ecommerce-opal-xi.vercel.app/products",
   )
@@ -24,6 +24,8 @@ export default function Cart() {
     loading: "Fetching your cart...",
     error: "Failed to load cart"
   } )
+
+  const navigate = useNavigate()
   
   useEffect(() => {
     if (data && data.data.products.length > 0 && cartList.length > 0) {
@@ -219,11 +221,14 @@ export default function Cart() {
       if (!response.ok) {
         throw new error("Failed to add order");
       }
+      
     } catch (error) {
       throw new Error("Something went wrong");
     }
-
-    setMessage("Order placed successfully");
+    
+    navigate("/user")
+    clearCartList()
+    toast.success("Order placed successfully");
   }
 
   return (
@@ -336,9 +341,6 @@ export default function Cart() {
                 </div>
               </div>
             )}
-            <div className="text-success text-center mt-2 fw-bold">
-              {message}
-            </div>
             {error && (
               <p className="text-danger text-center mt-2 font-monospace">
                 Error loading cart.

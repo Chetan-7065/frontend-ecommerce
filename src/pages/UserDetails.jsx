@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import useEcommerceContext from "../context/EcommerceContext";
@@ -68,15 +68,17 @@ export default function UserDetails() {
     error: "Failed to load order summary",
   });
 
-  const [displayOrders, setDisplayOrders] = useState(3);
+  const [displayOrders, setDisplayOrders] = useState(0);
   const [ordersSummary, setOrdersSummary] = useState([]);
-
+  console.log(displayOrders)
+  // console.log(ordersList.length)
+  
   useEffect(() => {
     if (ordersList.length === 0) return;
-    const orders = ordersList.filter((order, index) => index < displayOrders);
-    setOrdersSummary(orders);
-  }, [ordersList, displayOrders]);
-  console.log(ordersSummary);
+    const orders = ordersList.filter((order, index) => index > displayOrders);
+    const revereseArray = orders.reverse()
+    setOrdersSummary(revereseArray);
+  }, [displayOrders]);
 
   useEffect(() => {
     const primary = addresses.find((address) => address.isPrimary);
@@ -89,10 +91,22 @@ export default function UserDetails() {
   useEffect(() => {
     if (data && data.data.orders.length > 0) {
       setOrdersList(data.data.orders);
+       const requiredOrderIndex = ordersList.length !== 0 ? (`${ordersList.length}` - 3) : 0
+       setDisplayOrders(requiredOrderIndex)
     }
   }, [data]);
 
-  useMemo(() => {});
+   const handleViewMore = () => {
+    if(0 < displayOrders && displayOrders < ordersList.length){
+      console.log(ordersList)
+      console.log(ordersSummary)
+      setDisplayOrders((displayOrders) => displayOrders - 3)
+    }else{
+      const total = ordersList.length
+      console.log(total - 3)
+      setDisplayOrders(total - 3)
+    }
+  }
 
   const [address, setAddress] = useState({
     addressId: 0,
@@ -111,13 +125,7 @@ export default function UserDetails() {
     isPrimary: false,
   });
 
-  const handleViewMore = () => {
-    if(displayOrders < ordersList.length){
-      setDisplayOrders((displayOrders) => displayOrders + 3)
-    }else if(displayOrders === ordersList.length) {
-      setDisplayOrders(3)
-    }
-  }
+ 
 
   const handlePrimaryAddress = (addressId) => {
     const updatedAddresses = addresses.map((address) =>
