@@ -91,7 +91,7 @@ export default function UserDetails() {
   useEffect(() => {
     if (data && data.data.orders.length > 0) {
       setOrdersList(data.data.orders);
-       const requiredOrderIndex = ordersList.length !== 0 ? (`${ordersList.length}` - 3) : 0
+       const requiredOrderIndex = data.data.orders.length !== 0 ? (`${data.data.orders.length}` - 3) : 0
        setDisplayOrders(requiredOrderIndex)
     }
   }, [data]);
