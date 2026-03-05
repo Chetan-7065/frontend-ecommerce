@@ -1,11 +1,12 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import useEcommerceContext from "../context/EcommerceContext";
 import useFetch from "../useFetch";
-import { Link,  useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import StarCounter from "../components/StarCounter";
 import { useToastLoader } from "../components/useToastLoader";
 import { toast } from "react-toastify";
+import Footer from "../components/Footer";
 export default function Cart() {
   const {
     cartList,
@@ -19,14 +20,14 @@ export default function Cart() {
   const [displayProduct, setDisplayProduct] = useState([]);
   const { data, loading, error } = useFetch(
     "https://backend-ecommerce-opal-xi.vercel.app/products",
-  )
-    const { hasFetched } = useToastLoader(loading, error, data, {
+  );
+  const { hasFetched } = useToastLoader(loading, error, data, {
     loading: "Fetching your cart...",
-    error: "Failed to load cart"
-  } )
+    error: "Failed to load cart",
+  });
 
-  const navigate = useNavigate()
-  
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (data && data.data.products.length > 0 && cartList.length > 0) {
       const products = cartList.map((item) => {
@@ -41,22 +42,19 @@ export default function Cart() {
         } else {
           return { ...item };
         }
-        
       });
       setDisplayProduct(products);
     } else {
       setDisplayProduct([]);
     }
-
-    
   }, [data, cartList, loading, error]);
 
-  console.log(displayProduct)
+  console.log(displayProduct);
 
   const productCards =
     displayProduct.length > 0
       ? displayProduct.map((product) => {
-          const storeInWishlist = isInWishlist(product._id)
+          const storeInWishlist = isInWishlist(product._id);
           return (
             <div key={product._id} className="col-sm-6 col-md-6 col-lg-3 mb-4">
               <div
@@ -106,10 +104,10 @@ export default function Cart() {
                       height: "35px",
                       border: "none",
                       backgroundColor: "white",
-                      transition: "none", 
+                      transition: "none",
                     }}
                     onClick={(e) => {
-                      e.preventDefault(); 
+                      e.preventDefault();
                       toggleWishlist(product._id);
                     }}
                   >
@@ -120,7 +118,10 @@ export default function Cart() {
                 </div>
 
                 <div className="card-body d-flex flex-column p-3 ">
-                  <Link to={`/productsDetails/${product._id}` } className="text-decoration-none">
+                  <Link
+                    to={`/productsDetails/${product._id}`}
+                    className="text-decoration-none"
+                  >
                     <h6
                       className="card-title text-dark fw-bold mb-2"
                       style={{
@@ -221,13 +222,12 @@ export default function Cart() {
       if (!response.ok) {
         throw new error("Failed to add order");
       }
-      
     } catch (error) {
       throw new Error("Something went wrong");
     }
-    
-    navigate("/user")
-    clearCartList()
+
+    navigate("/user");
+    clearCartList();
     toast.success("Order placed successfully");
   }
 
@@ -239,10 +239,28 @@ export default function Cart() {
         <div className="row mt-4 g-4">
           <div className="col-lg-9">
             <div className="row g-3">
-              {!loading && cartList.length === 0 && hasFetched &&(
-                <div className="text-center p-5 mx-5 ">
-                  <i className="bi bi-cart-x display-1 text-muted"></i>
-                  <p className="fs-2 mt-3 ">No items in your cart</p>
+              {!loading && cartList.length === 0 && hasFetched && (
+                <div className="text-center my-5 mx-5 px-5">
+                  <div
+                    className="my-5 p-5 mx-auto px-5"
+                    style={{ maxWidth: "600px" }}
+                  >
+                    <i className="bi bi-cart-x display-1 text-muted"></i>
+
+                    <p className="fs-2 mt-3 fw-semibold text-dark">
+                      Your cart is empty
+                    </p>
+                    <p className="text-muted mb-4">
+                      Looks like you haven't added any electronics to your cart
+                      yet.
+                    </p>
+                    <a
+                      href="/products/smartphones"
+                      className="btn btn-primary btn-lg px-5 shadow-sm"
+                    >
+                      Browse Gadgets
+                    </a>
+                  </div>
                 </div>
               )}
               {productCards}
@@ -349,6 +367,7 @@ export default function Cart() {
           </div>
         </div>
       </main>
+      <Footer />
     </>
   );
 }

@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import useEcommerceContext from "../context/EcommerceContext";
 import useFetch from "../useFetch";
 import { useToastLoader } from "../components/useToastLoader";
+import Footer from "../components/Footer";
 
 export const userDetails = {
   id: 1,
@@ -607,6 +608,7 @@ export default function UserDetails() {
           </div>
         </div>
       </main>
+      <Footer/>
     </>
   );
 }

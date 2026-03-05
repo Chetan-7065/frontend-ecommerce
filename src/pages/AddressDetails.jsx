@@ -3,6 +3,7 @@ import Header from "../components/Header"
 import { userDetails } from "./UserDetails";
 import { useNavigate } from "react-router-dom";
 import useEcommerceContext from "../context/EcommerceContext";
+import Footer from "../components/Footer";
 
 export default function AddressDetails(){
  const [messageDisplay, setMessageDisplay] = useState(false)
@@ -176,6 +177,7 @@ return(
     </div>
   </div>
 </div>
+<Footer/>
     </>
   )
 }

@@ -5,6 +5,7 @@ import useFetch from "../useFetch";
 import { Link } from "react-router-dom";
 import StarCounter from "../components/StarCounter";
 import { useToastLoader } from "../components/useToastLoader";
+import Footer from "../components/Footer";
 
 export default function Wishlist() {
   const {
@@ -154,6 +155,7 @@ export default function Wishlist() {
   </div>
 )}
       </main>
+<Footer/>
     </>
   );
 }

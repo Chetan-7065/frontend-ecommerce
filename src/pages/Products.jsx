@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import useEcommerceContext from "../context/EcommerceContext";
 import StarCounter from "../components/StarCounter";
 import { useToastLoader } from "../components/useToastLoader";
+import Footer from "../components/Footer";
 
 function ProductsCard({ displayProduct, loading, error }) {
   const {
@@ -29,7 +30,7 @@ function ProductsCard({ displayProduct, loading, error }) {
 
   const productCards =
     displayProduct.length > 0
-      ? displayProduct.map((product) => {
+      ?displayProduct.map((product) => {
           const storeInWishlist = isInWishlist(product._id);
           const quantityDetails = productQuantity(product._id);
           return (
@@ -286,7 +287,7 @@ export default function Products() {
   return (
     <>
       <Header />
-      <main className="container-fluid px-md-5">
+      <main className="container ">
       
         <div className="row g-4 my-2">
       
@@ -432,6 +433,7 @@ export default function Products() {
           </div>
         </div>
       </main>
+      <Footer/>
     </>
   );
 }

@@ -20,33 +20,75 @@ export default function Header(){
     }
   }
   return(
- <header>
-  <nav className="navbar sticky-top navbar-expand-lg " style={{"background": "#001d3d", "borderBottom": "3px solid #003566"}} >
+//  <header>
+//   <nav className="navbar sticky-top navbar-expand-lg " style={{"background": "#001d3d", "borderBottom": "3px solid #003566"}} >
+//     <div className="container">
+//       <NavLink className="navbar-brand text-light fs-3" to="/">Gadget<span style={{color: "#4cc9f0"}}>Hub</span></NavLink>
+//       <button className="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+//         <span className="navbar-toggler-icon"></span>
+//       </button>
+//       <div className="collapse navbar-collapse" id="navbarSupportedContent">
+//         <div className="d-flex flex-grow-1 mx-lg-4 my-lg-0">
+//           <form className="d-flex w-100" role="search" onSubmit={handleSubmit}>
+//             <input className="form-control me-2 border-0 shadow-none" style={{backgroundColor: "#e9ecef"}} type="search" placeholder="Search devices..." aria-label="Search" onChange={(event) => setMessage(event.target.value)} onKeyDown={handleKeyChange}/>
+//             <Link className="btn btn-info text-white" to={message.trim() ? `/products/${message}`: "#"} type="submit"> <i className="bi bi-search"></i></Link>
+//           </form>
+//         </div>
+//         <ul className="navbar-nav ms-auto align-items-center">
+//           <li className="nav-item">
+//             <NavLink className="nav-link link-light" to="/wishlist"><span className="fs-5 bi bi-heart position-relative">
+//               <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill text-warning fs-5">{wishList.length}</span>
+//             </span></NavLink>
+//           </li>
+//           <li className="nav-item">
+//             <NavLink className="nav-link link-light" to="/cart"><span className="fs-5 bi bi-cart position-relative">
+//               <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill text-warning fs-5">{cartList.length}</span>
+//             </span></NavLink>
+//           </li>
+//           <li className="nav-item">
+//             <NavLink to="/user" className="nav-link link-light"><img className="img-fluid rounded-circle border border-info" src={`${userDetails.imageUrl}?crop=faces&fit=crop&h=30&w=30`} alt="user-image" /></NavLink>
+//           </li>
+//         </ul> 
+//       </div>
+//     </div>
+//   </nav>
+// </header>
+<header>
+  <nav className="navbar sticky-top navbar-expand-lg" style={{"background": "#001d3d", "borderBottom": "3px solid #003566"}}>
     <div className="container">
       <NavLink className="navbar-brand text-light fs-3" to="/">Gadget<span style={{color: "#4cc9f0"}}>Hub</span></NavLink>
+      
       <button className="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
       </button>
+
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
-        <div className="d-flex flex-grow-1 mx-lg-4 my-lg-0">
+        <div className="d-flex flex-grow-1 mx-lg-4 my-3 my-lg-0">
           <form className="d-flex w-100" role="search" onSubmit={handleSubmit}>
             <input className="form-control me-2 border-0 shadow-none" style={{backgroundColor: "#e9ecef"}} type="search" placeholder="Search devices..." aria-label="Search" onChange={(event) => setMessage(event.target.value)} onKeyDown={handleKeyChange}/>
             <Link className="btn btn-info text-white" to={message.trim() ? `/products/${message}`: "#"} type="submit"> <i className="bi bi-search"></i></Link>
           </form>
         </div>
-        <ul className="navbar-nav ms-auto align-items-center">
+
+        <ul className="navbar-nav ms-auto align-items-center flex-row justify-content-center gap-3">
           <li className="nav-item">
-            <NavLink className="nav-link link-light" to="/wishlist"><span className="fs-5 bi bi-heart position-relative">
-              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill text-warning fs-5">{wishList.length}</span>
-            </span></NavLink>
+            <NavLink className="nav-link link-light" to="/wishlist">
+              <span className="fs-5 bi bi-heart position-relative">
+                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill text-warning fs-5">{wishList.length}</span>
+              </span>
+            </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link link-light" to="/cart"><span className="fs-5 bi bi-cart position-relative">
-              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill text-warning fs-5">{cartList.length}</span>
-            </span></NavLink>
+            <NavLink className="nav-link link-light" to="/cart">
+              <span className="fs-5 bi bi-cart position-relative">
+                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill text-warning fs-5">{cartList.length}</span>
+              </span>
+            </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to="/user" className="nav-link link-light"><img className="img-fluid rounded-circle border border-info" src={`${userDetails.imageUrl}?crop=faces&fit=crop&h=30&w=30`} alt="user-image" /></NavLink>
+            <NavLink to="/user" className="nav-link link-light">
+              <img className="img-fluid rounded-circle border border-info" src={`${userDetails.imageUrl}?crop=faces&fit=crop&h=30&w=30`} alt="user-image" />
+            </NavLink>
           </li>
         </ul> 
       </div>
@@ -55,9 +97,3 @@ export default function Header(){
 </header>
   )
 }
-
-// Tasks to complete 
-// Add more product on the database
-// Working buy now button
-// Address details working on address to update address on the localStorage
-// 2,7,9

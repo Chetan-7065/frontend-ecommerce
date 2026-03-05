@@ -5,6 +5,7 @@ import useFetch from "../useFetch";
 import StarCounter from "../components/StarCounter";
 import useEcommerceContext from "../context/EcommerceContext";
 import { useToastLoader } from "../components/useToastLoader";
+import Footer from "../components/Footer";
 
 
 export default function ProductDetails() {
@@ -251,6 +252,7 @@ export default function ProductDetails() {
           </div>
         )}
       </main>
+      <Footer/>
     </>
   );
 }

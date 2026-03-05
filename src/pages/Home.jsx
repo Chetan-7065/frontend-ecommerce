@@ -3,6 +3,7 @@ import heroImage from "../images/heroImage.png"
 import iphone from "../images/iphone.png"
 import { Link } from "react-router-dom";
 import { useToastLoader } from "../components/useToastLoader";
+import Footer from "../components/Footer";
 
 function Product(){
      const productsUrl =  "https://backend-ecommerce-opal-xi.vercel.app/products"
@@ -89,7 +90,6 @@ function CategoriesList(){
 
 
 export default function Home(){
-  
   return (
     <main >
      <section style={{"backgroundColor": "#F0F7FF", "backgroundImage": "radial-gradient(circle at 10% 20%, #e0f2fe 0%, #f0f7ff 100%)"}}>
@@ -110,6 +110,7 @@ export default function Home(){
       <section >
         <Product/>
       </section>
+        <Footer/>
      </main>
   )
 }
