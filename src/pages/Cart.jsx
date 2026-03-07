@@ -237,7 +237,7 @@ export default function Cart() {
       <main className="container-fluid px-md-5">
         <h1 className="text-center mt-4 fw-bold">My Cart</h1>
         <div className="row mt-4 g-4">
-          <div className="col-lg-9">
+          <div className="col-12">
             <div className="row g-3">
               {!loading && cartList.length === 0 && hasFetched && (
                 <div className="text-center my-5 mx-5 px-5">
