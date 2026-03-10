@@ -191,9 +191,11 @@ export default function Cart() {
     return acc;
   }, {});
 
+  console.log(displayProduct)
+
   const ordersList = displayProduct.reduce((acc, curr) => {
     const totalProductPrice = curr.quantity * curr.price;
-    acc.product = "69274ebbe1a3d21e6b477606";
+    acc.product = curr._id;
     acc.totalPrice = totalProductPrice;
     acc.quantity = curr.quantity;
     acc.shippingAddress = primaryAddress;
