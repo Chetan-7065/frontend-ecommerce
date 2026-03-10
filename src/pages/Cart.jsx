@@ -234,38 +234,39 @@ export default function Cart() {
   return (
     <>
       <Header />
-      <main className="container-fluid px-md-5">
-        <h1 className="text-center mt-4 fw-bold">My Cart</h1>
+      <main className="container px-md-5 ">
+              <h1 className="text-center px-5 m-5 fw-bold">My Cart</h1>
         <div className="row mt-4 g-4">
-          <div className="col-12">
-            <div className="row g-3">
-              {!loading && cartList.length === 0 && hasFetched && (
-                <div className="text-center my-5 mx-5 px-5">
-                  <div
-                    className="my-5 p-5 mx-auto px-5"
-                    style={{ maxWidth: "600px" }}
-                  >
-                    <i className="bi bi-cart-x display-1 text-muted"></i>
+<div className={cartList.length === 0 ? "col-11" : "col-lg-9"}>
+  <div className="row g-3">
+    {!loading && cartList.length === 0 && hasFetched && (
+      <div className="text-center my-5 mx-5 px-5 d-flex flex-column align-items-center justify-content-center" style={{ minHeight: '50vh' }}>
+        <div
+          className="my-5 p-5 mx-auto px-5"
+          style={{ maxWidth: "600px" }}
+        >
+          <i className="bi bi-cart-x display-1 text-muted"></i>
 
-                    <p className="fs-2 mt-3 fw-semibold text-dark">
-                      Your cart is empty
-                    </p>
-                    <p className="text-muted mb-4">
-                      Looks like you haven't added any electronics to your cart
-                      yet.
-                    </p>
-                    <a
-                      href="/products/smartphones"
-                      className="btn btn-primary btn-lg px-5 shadow-sm"
-                    >
-                      Browse Gadgets
-                    </a>
-                  </div>
-                </div>
-              )}
-              {productCards}
-            </div>
-          </div>
+          <p className="fs-2 mt-3 fw-semibold text-dark">
+            Your cart is empty
+          </p>
+          <p className="text-muted mb-4">
+            Looks like you haven't added any electronics to your cart
+            yet.
+          </p>
+          <a
+            href="/products/smartphones"
+            className="btn btn-primary btn-lg px-5 shadow-sm"
+          >
+            Browse Gadgets
+          </a>
+        </div>
+      </div>
+    )}
+    {productCards}
+  </div>
+</div>
+        
           <div className="col-lg-3">
             {displayProduct.length > 0 && (
               <div
