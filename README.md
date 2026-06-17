@@ -93,7 +93,7 @@ Sample response <br>
 {id, name, source, agent, status, tags, timeToClose, priority}
 ```
 
-#### **Post /api/order**
+## **Post /api/order**
 Easily update a new order<br>
 Sample response <br>
 ```
