@@ -1,70 +1,105 @@
-# Getting Started with Create React App
+# GadgetHub Electronics E-commerce App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack E-commerce application featuring complete CRUD operations to manage, browse, and update electronic products<br>
+Built with react frontend, Express/Node backend , MongoDB database.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Demo Link
 
-### `npm start`
+[Link Demo](https://frontend-ecommerce-six-zeta.vercel.app/)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
+## Quick Start
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```
+git clone https://github.com/Chetan-7065/frontend-ecommerce.git
+cd <your-repo>
+npm install 
+npm run dev # or `npm start` / `yarn dev`
+```
 
-### `npm test`
+## Technologies
+- React JS
+- React Router
+- Node JS
+- Express
+- MongoDB
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## Demo Video 
+Watch a walkthrough (5 minutes) of all the major features of this app:<br/>
+[Loom Video](https://frontend-ecommerce-six-zeta.vercel.app/)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Features
+**Home**
+- Browse products easily through organized categories like laptops, mobiles and Home appliances.
+- Search for any product instantly by typing its name in the search bar.
+- View the deal of the day and purchase or view it instantly with one click.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**Products List**
+- Browse all products with their current prices and user ratings, and easily add them to your wishlist.
+- Filter out products by rating or categories and sort them easily from low-to-high or high-to-low price.
+- Click any product to instantly view its all specification and add it directly to your cart.
 
-### `npm run eject`
+**Product Details**
+- View full product details including the current price, name, specification and user ratings. 
+- Easily add item to your cart or order instantly with a single click.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+**Wishlist**
+- View all the products saved in your wishlist and purchase them instantly with a single click.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+**Cart**
+- View all the products saved in your cart along with total price and current delivery address.
+- Order all the products on particular address with a single click
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+**Profile** 
+- View your personal details including name, contact info and primary delivery address and new delivery locations.
+- Easily update your main address and remove the old and unwanted addresses from your profile.
+- View your complete order history organized conveniently from newest to oldest purchase.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## API Reference
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### **Get /api/products**
+List of all products <br>
+Sample response <br>
+```
+[{id, title, brand, price, category, rating, images}, ...]
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### **Get /api/products/:productID**
+Get a specific product by Id<br>
+Sample response <br>
+```
+{id, title, brand, price, category, rating, images}
+```
 
-### Code Splitting
+### **Get /api/categories**
+List of all categories <br>
+Sample response <br>
+```
+[{id, title, image, description}, ...]
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### **Get /api/orders**
+List of all lead <br>
+Sample response <br>
+```
+{id, name, source, agent, status, tags, timeToClose, priority}
+```
 
-### Analyzing the Bundle Size
+#### **Post /api/order**
+Easily update a new order<br>
+Sample response <br>
+```
+{id, product, price, address, paymentDetails, status, premiumMember}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Contact
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+For bugs or feature requests, please reach out to chetanpathak3055@gmail.com
