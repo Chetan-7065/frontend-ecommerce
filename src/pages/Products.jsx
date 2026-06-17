@@ -149,7 +149,6 @@ function ProductsCard({ displayProduct, loading, error }) {
     <>
       {productCards.length === 0 && !loading && !error  ? (
        <div className="text-center py-5 my-5  rounded">
-  {/* Icon: Using a simple Bootstrap Icon or a generic SVG */}
   <div className="mb-4">
     <i className="bi bi-cpu text-muted" style={{ fontSize: '4rem' }}></i>
   </div>
@@ -162,7 +161,7 @@ function ProductsCard({ displayProduct, loading, error }) {
   
   <button 
     className="btn btn-primary btn-lg mt-3 px-4 shadow-sm"
-    onClick={() => window.location.reload()} // Or a function to reset filters
+    onClick={() => window.location.reload()} 
   >
     Clear All Filters
   </button>
